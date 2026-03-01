@@ -128,16 +128,16 @@ gofolio-web/                    SvelteKit project
 
 ## Migration Phases
 
-### Phase 0 — Scaffold (day 1)
+### Phase 0 — Scaffold (day 1) ✅ DONE
 
-1. Init SvelteKit project with TypeScript
-2. Add Tailwind CSS
-3. Add shadcn-svelte (`npx shadcn-svelte@latest init`)
-4. Set up same-origin API proxy in `src/routes/api/[...path]/+server.ts` (server forwards to gofolio-api)
-5. Set up auth (JWT cookie handling)
-6. Create `$lib/api/client.ts` — typed fetch wrapper for same-origin `/api/v1/*`
-7. Set up dark/light theme toggle with CSS vars
-8. Scaffold route groups: `(app)`, `(auth)`
+1. ✅ Init SvelteKit project with TypeScript (SvelteKit 2, Svelte 5)
+2. ✅ Add Tailwind CSS (v4, via `@tailwindcss/vite`)
+3. ✅ Add shadcn-svelte (neutral base color, dark mode CSS vars)
+4. ✅ Set up same-origin API proxy in `src/routes/api/[...path]/+server.ts` (server forwards to gofolio-api)
+5. ✅ Set up auth (JWT cookie handling in `hooks.server.ts`)
+6. ✅ Create `$lib/api/client.ts` — typed fetch wrapper for same-origin `/api/v1/*`
+7. ✅ Set up dark/light theme toggle with CSS vars (`$lib/stores/theme.ts`)
+8. ✅ Scaffold route groups: `(app)`, `(auth)`, root redirect `/` → `/home`
 
 ### Phase 1 — Auth + shell (day 1-2)
 
