@@ -107,6 +107,6 @@
 	});
 </script>
 
-<div class="relative h-64 w-full md:h-80">
+<div class="relative mx-auto w-full" style="aspect-ratio: 16 / 9; max-width: 50rem;">
 	<canvas bind:this={canvasEl}></canvas>
 </div>

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import * as Table from '$lib/components/ui/table';
-	import { Badge } from '$lib/components/ui/badge';
 	import Value from '$lib/components/app/Value.svelte';
 	import { TrendingUp, TrendingDown, Minus } from '@lucide/svelte';
 	import type { BenchmarkTrend, MarketCondition } from '$lib/types/api';
@@ -20,18 +19,10 @@
 		return 'text-muted-foreground';
 	}
 
-	function conditionVariant(
-		condition: MarketCondition
-	): 'default' | 'secondary' | 'destructive' | 'outline' {
-		if (condition === 'ALL_TIME_HIGH') return 'default';
-		if (condition === 'BEAR_MARKET') return 'destructive';
-		return 'outline';
-	}
-
-	function conditionLabel(condition: MarketCondition) {
-		if (condition === 'ALL_TIME_HIGH') return 'ATH';
-		if (condition === 'BEAR_MARKET') return 'Bear';
-		return 'Neutral';
+	function conditionEmoji(condition: MarketCondition) {
+		if (condition === 'ALL_TIME_HIGH') return '🚀';
+		if (condition === 'BEAR_MARKET') return '🐻';
+		return '😐';
 	}
 </script>
 
@@ -42,10 +33,10 @@
 			<Table.Header>
 				<Table.Row>
 					<Table.Head>Benchmark</Table.Head>
-					<Table.Head class="text-center">Condition</Table.Head>
 					<Table.Head class="text-center">50d</Table.Head>
 					<Table.Head class="text-center">200d</Table.Head>
 					<Table.Head class="text-right">From ATH</Table.Head>
+					<Table.Head class="text-center">Market</Table.Head>
 				</Table.Row>
 			</Table.Header>
 			<Table.Body>
@@ -56,18 +47,22 @@
 				{#each data.benchmarks as benchmark (benchmark.symbol)}
 					{@const Icon50 = trendIcon(benchmark.trend50d)}
 					{@const Icon200 = trendIcon(benchmark.trend200d)}
-					<Table.Row>
-						<Table.Cell class="font-medium">{benchmark.name}</Table.Cell>
-						<Table.Cell class="text-center">
-							<Badge variant={conditionVariant(benchmark.marketCondition)}>
-								{conditionLabel(benchmark.marketCondition)}
-							</Badge>
+					<Table.Row class="odd:bg-background even:bg-muted/30 hover:bg-muted/60">
+						<Table.Cell class="font-medium">
+							<div class="leading-tight">
+								<div class="text-foreground truncate">{benchmark.name}</div>
+								<div class="text-muted-foreground text-xs">{benchmark.symbol}</div>
+							</div>
 						</Table.Cell>
 						<Table.Cell class="text-center">
-							<Icon50 class="mx-auto h-4 w-4 {trendColor(benchmark.trend50d)}" />
+							{#if benchmark.trend50d !== 'UNKNOWN'}
+								<Icon50 class="mx-auto h-4 w-4 {trendColor(benchmark.trend50d)}" />
+							{/if}
 						</Table.Cell>
 						<Table.Cell class="text-center">
-							<Icon200 class="mx-auto h-4 w-4 {trendColor(benchmark.trend200d)}" />
+							{#if benchmark.trend200d !== 'UNKNOWN'}
+								<Icon200 class="mx-auto h-4 w-4 {trendColor(benchmark.trend200d)}" />
+							{/if}
 						</Table.Cell>
 						<Table.Cell class="text-right">
 							<Value
@@ -76,6 +71,7 @@
 								colorized
 							/>
 						</Table.Cell>
+						<Table.Cell class="text-center">{conditionEmoji(benchmark.marketCondition)}</Table.Cell>
 					</Table.Row>
 				{:else}
 					<Table.Row>

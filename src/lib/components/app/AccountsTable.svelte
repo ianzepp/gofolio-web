@@ -26,7 +26,7 @@
 	</Table.Header>
 	<Table.Body>
 		{#each accounts as account (account.id)}
-			<Table.Row>
+			<Table.Row class="odd:bg-background even:bg-muted/30 hover:bg-muted/60">
 				<Table.Cell class="font-medium">{account.name}</Table.Cell>
 				<Table.Cell class="hidden sm:table-cell">
 					{account.platform?.name ?? '-'}

@@ -17,6 +17,7 @@
 		| 'assetClass'
 		| 'currency'
 		| 'marketPrice'
+		| 'change'
 		| 'performance'
 		| 'allocation'
 		| 'value';
@@ -44,6 +45,8 @@
 				return h.marketPrice;
 			case 'performance':
 				return h.netPerformancePercentWithCurrencyEffect;
+			case 'change':
+				return h.netPerformanceWithCurrencyEffect;
 			case 'allocation':
 				return h.allocationInPercentage;
 			case 'value':
@@ -87,10 +90,11 @@
 				>{@render sortHeader('Currency', 'currency')}</Table.Head
 			>
 			<Table.Head class="text-right">{@render sortHeader('Price', 'marketPrice')}</Table.Head>
-			<Table.Head class="text-right">{@render sortHeader('Perf. %', 'performance')}</Table.Head>
 			<Table.Head class="hidden text-right sm:table-cell"
-				>{@render sortHeader('Alloc. %', 'allocation')}</Table.Head
+				>{@render sortHeader('Allocation', 'allocation')}</Table.Head
 			>
+			<Table.Head class="text-right">{@render sortHeader('Change', 'change')}</Table.Head>
+			<Table.Head class="text-right">{@render sortHeader('Performance', 'performance')}</Table.Head>
 			<Table.Head class="text-right">{@render sortHeader('Value', 'value')}</Table.Head>
 		</Table.Row>
 	</Table.Header>
@@ -100,8 +104,13 @@
 			The legacy backend effectively treats holdings as symbol-keyed data.
 		-->
 		{#each sorted as holding (holding.symbol)}
-			<Table.Row class="hover:bg-muted/50 cursor-pointer">
-				<Table.Cell class="font-medium">{holding.name}</Table.Cell>
+			<Table.Row class="odd:bg-background even:bg-muted/30 hover:bg-muted/60 cursor-pointer">
+				<Table.Cell class="font-medium">
+					<div class="leading-tight">
+						<div class="text-foreground truncate">{holding.name}</div>
+						<div class="text-muted-foreground text-xs">{holding.symbol}</div>
+					</div>
+				</Table.Cell>
 				<Table.Cell class="hidden md:table-cell">
 					{#if holding.assetClass}
 						<Badge variant="outline">{holding.assetClass}</Badge>
@@ -111,11 +120,14 @@
 				<Table.Cell class="text-right">
 					<Value value={holding.marketPrice} currency={holding.currency} />
 				</Table.Cell>
-				<Table.Cell class="text-right">
-					<Value value={holding.netPerformancePercentWithCurrencyEffect} type="percent" colorized />
-				</Table.Cell>
 				<Table.Cell class="hidden text-right sm:table-cell">
 					<Value value={holding.allocationInPercentage} type="percent" />
+				</Table.Cell>
+				<Table.Cell class="text-right">
+					<Value value={holding.netPerformanceWithCurrencyEffect} currency={baseCurrency} colorized />
+				</Table.Cell>
+				<Table.Cell class="text-right">
+					<Value value={holding.netPerformancePercentWithCurrencyEffect} type="percent" colorized />
 				</Table.Cell>
 				<Table.Cell class="text-right">
 					<Value value={holding.valueInBaseCurrency} currency={baseCurrency} />
@@ -123,7 +135,7 @@
 			</Table.Row>
 		{:else}
 			<Table.Row>
-				<Table.Cell colspan={7} class="text-muted-foreground py-8 text-center">
+				<Table.Cell colspan={8} class="text-muted-foreground py-8 text-center">
 					No holdings found.
 				</Table.Cell>
 			</Table.Row>
