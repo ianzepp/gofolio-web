@@ -72,14 +72,14 @@ This document tracks the remaining work to recreate Ghostfolio's UI/UX in `gofol
 
 ## 9. Portfolio Section Coverage (Major Missing Area)
 
-- Implement portfolio routes and pages:
+- [x] Implement portfolio routes/pages scaffold:
   - Activities
   - Allocations
   - Fire
   - X-Ray
   - Analysis
-- Recreate shared portfolio layout/tab structure and filters.
-- Port critical dialogs and flows tied to these views.
+- [x] Recreate shared portfolio layout/tab structure.
+- [~] Port critical dialogs and flows tied to these views (pages are now data-backed, but advanced dialogs/filters/import flows are still pending).
 
 ## 10. User Account / Settings Coverage
 
