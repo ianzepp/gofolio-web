@@ -19,6 +19,7 @@ export interface UserSettings {
 	baseCurrency?: string;
 	colorScheme?: 'LIGHT' | 'DARK';
 	dateRange?: string;
+	isRestrictedView?: boolean;
 	locale?: string;
 	viewMode?: string;
 }
