@@ -34,12 +34,13 @@ gofolio-web/                    SvelteKit project
   src/
     lib/
       api/                      API client (replaces DataService + AdminService)
-      components/               Shared UI components
+      components/
+        app/                    App-level components (AppHeader, etc.)
+        ui/                     shadcn-svelte primitives (button, input, etc.)
         charts/                 Chart.js wrappers
         tables/                 Data tables
         dialogs/                Modal dialogs
         forms/                  Form controls
-        layout/                 Header, footer, sidebar
       stores/                   Svelte stores (replaces ObservableStore + RxJS)
       types/                    TypeScript interfaces (ported from Angular)
       utils/                    Formatting, date helpers, filters
@@ -93,10 +94,10 @@ gofolio-web/                    SvelteKit project
 | Framework        | Angular 21                        | SvelteKit 2                                                                  |
 | Language         | TypeScript                        | TypeScript                                                                   |
 | Routing          | Angular Router + lazy loading     | SvelteKit file-based routing                                                 |
-| State            | RxJS + ObservableStore            | Svelte stores (`writable`, `derived`)                                        |
+| State            | RxJS + ObservableStore            | Svelte 5 runes (`$state`, `$derived`) + server-side load functions           |
 | HTTP client      | Angular HttpClient + interceptors | Same-origin `fetch` to `/api/v1/*`; SvelteKit server forwards to gofolio-api |
 | UI components    | Angular Material                  | shadcn-svelte (Radix primitives, Tailwind)                                   |
-| Icons            | Ionicons                          | Ionicons (same icon set for visual parity)                                   |
+| Icons            | Ionicons                          | Lucide (`@lucide/svelte`)                                                    |
 | Charts           | Chart.js + Angular wrappers       | Chart.js direct (or svelte-chartjs)                                          |
 | CSS              | SCSS + Bootstrap 4 + CSS vars     | Tailwind CSS + CSS vars                                                      |
 | Tables           | MatTable + MatSort + MatPaginator | TanStack Table (headless) + shadcn table                                     |
@@ -107,6 +108,8 @@ gofolio-web/                    SvelteKit project
 | Device detection | ngx-device-detector               | CSS media queries + `$app/environment`                                       |
 | Markdown         | ngx-markdown + marked             | mdsvex (if needed)                                                           |
 | Auth             | JWT in localStorage + interceptor | JWT in httpOnly cookie, `hooks.server.ts` (no OAuth, no WebAuthn)            |
+| Linting          | TSLint / ESLint (Angular)         | ESLint + typescript-eslint + eslint-plugin-svelte                            |
+| Formatting       | Prettier (Angular)                | Prettier + prettier-plugin-svelte + prettier-plugin-tailwindcss              |
 | Build            | Nx + Angular CLI + esbuild        | Vite (built into SvelteKit)                                                  |
 
 ### Why shadcn-svelte
@@ -139,16 +142,17 @@ gofolio-web/                    SvelteKit project
 7. ✅ Set up dark/light theme toggle with CSS vars (`$lib/stores/theme.ts`)
 8. ✅ Scaffold route groups: `(app)`, `(auth)`, root redirect `/` → `/home`
 
-### Phase 1 — Auth + shell (day 1-2)
+### Phase 1 — Auth + shell (day 1-2) ✅ DONE
 
 Get the app to boot, authenticate, and show a layout.
 
-1. **Login page** — `/auth` with anonymous token login
-2. **Auth hooks** — `hooks.server.ts` validates JWT, redirects to `/auth` if missing
-3. **App layout** — `(app)/+layout.svelte` with header, sidebar, nav
-4. **User store** — `$lib/stores/user.ts` fetches and caches current user
-5. **Info endpoint** — fetch `/api/v1/info` on layout load for system config
-6. **Root redirect** — `/` redirects to `/home`
+1. ✅ **Login page** — `/auth` with security token form, SvelteKit form action, httpOnly cookie
+2. ✅ **Auth guard** — `hooks.server.ts` redirects to `/auth` if no token, redirects away if authenticated
+3. ✅ **Sign out** — named form action at `/auth?/signout`, clears cookie
+4. ✅ **App layout** — `(app)/+layout.server.ts` fetches `/api/v1/info` + `/api/v1/user` server-side
+5. ✅ **Header** — `$lib/components/app/AppHeader.svelte` with nav links, theme toggle, user dropdown, mobile hamburger menu
+6. ✅ **Home stub** — `(app)/home/+page.svelte` placeholder confirming data pipeline works
+7. ✅ **ESLint + Prettier** — standard SvelteKit linting with Svelte and Tailwind plugins
 
 ### Phase 2 — Dashboard + read-only views (day 2-4)
 
@@ -212,8 +216,8 @@ The complex views.
 | Angular Component                | SvelteKit Equivalent                           |
 | -------------------------------- | ---------------------------------------------- |
 | `app.component.ts`               | `+layout.svelte` (root)                        |
-| `header.component.ts`            | `$lib/components/layout/Header.svelte`         |
-| `footer.component.ts`            | `$lib/components/layout/Footer.svelte`         |
+| `header.component.ts`            | `$lib/components/app/AppHeader.svelte`         |
+| `footer.component.ts`            | `$lib/components/app/AppFooter.svelte`         |
 | `auth/page.component.ts`         | `routes/(auth)/auth/+page.svelte`              |
 | `login-with-access-token-dialog` | Inline in auth page                            |
 | `home-overview.component.ts`     | `routes/(app)/home/+page.svelte`               |
@@ -333,7 +337,7 @@ Implementation details may differ as long as visual and interaction outcomes rem
 - Layout structure (header, sidebar, content area)
 - Component appearance (tables, cards, dialogs, buttons, charts)
 - Spacing and sizing conventions
-- Icon style (Ionicons look — Lucide is close enough, or keep Ionicons)
+- Icon style (Lucide — visually similar to Ionicons)
 - Chart colors and styling
 
 ### How to achieve this
