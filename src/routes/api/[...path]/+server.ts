@@ -3,9 +3,10 @@ import type { RequestHandler } from './$types';
 
 const API_URL = env.GOFOLIO_API_URL ?? 'http://localhost:3333';
 
-export const fallback: RequestHandler = async ({ request, params, cookies }) => {
+export const fallback: RequestHandler = async ({ request, params, cookies, url }) => {
 	const token = cookies.get('gofolio_token');
-	const upstream = `${API_URL}/${params.path}`;
+	const query = url.search;
+	const upstream = `${API_URL}/api/${params.path}${query}`;
 
 	const headers = new Headers();
 	headers.set('content-type', request.headers.get('content-type') ?? 'application/json');
