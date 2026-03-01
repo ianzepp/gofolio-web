@@ -5,7 +5,7 @@ import type { Actions } from './$types';
 const API_URL = env.GOFOLIO_API_URL ?? 'http://localhost:3333';
 
 export const actions: Actions = {
-	default: async ({ request, cookies, url }) => {
+	signin: async ({ request, cookies, url }) => {
 		const data = await request.formData();
 		const accessToken = data.get('accessToken');
 
@@ -40,6 +40,37 @@ export const actions: Actions = {
 		redirect(303, '/home');
 	},
 
+	signup: async ({ cookies, url }) => {
+		try {
+			const res = await fetch(`${API_URL}/api/v1/user`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({})
+			});
+
+			if (!res.ok) {
+				const text = await res.text();
+				return fail(res.status, {
+					tab: 'signup',
+					error: text || 'Unable to create account. Registration may be disabled.'
+				});
+			}
+
+			const { accessToken, authToken } = await res.json();
+
+			cookies.set('gofolio_token', authToken, {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'lax',
+				secure: url.protocol === 'https:',
+				maxAge: 60 * 60 * 24 * 30
+			});
+
+			return { tab: 'signup', accessToken };
+		} catch {
+			return fail(500, { tab: 'signup', error: 'Unable to connect to server.' });
+		}
+	},
 	signout: async ({ cookies }) => {
 		cookies.delete('gofolio_token', { path: '/' });
 		redirect(303, '/auth');
