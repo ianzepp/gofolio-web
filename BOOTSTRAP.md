@@ -88,26 +88,26 @@ gofolio-web/                    SvelteKit project
 
 ## Tech Stack
 
-| Concern | Angular (current) | SvelteKit (target) |
-|---------|-------------------|-------------------|
-| Framework | Angular 21 | SvelteKit 2 |
-| Language | TypeScript | TypeScript |
-| Routing | Angular Router + lazy loading | SvelteKit file-based routing |
-| State | RxJS + ObservableStore | Svelte stores (`writable`, `derived`) |
-| HTTP client | Angular HttpClient + interceptors | Same-origin `fetch` to `/api/v1/*`; SvelteKit server forwards to gofolio-api |
-| UI components | Angular Material | shadcn-svelte (Radix primitives, Tailwind) |
-| Icons | Ionicons | Ionicons (same icon set for visual parity) |
-| Charts | Chart.js + Angular wrappers | Chart.js direct (or svelte-chartjs) |
-| CSS | SCSS + Bootstrap 4 + CSS vars | Tailwind CSS + CSS vars |
-| Tables | MatTable + MatSort + MatPaginator | TanStack Table (headless) + shadcn table |
-| Dialogs | MatDialog | shadcn-svelte Dialog (Radix) |
-| Forms | Angular Reactive Forms + Material | Native forms + superforms + shadcn form |
-| i18n | Angular i18n (xlf) | Deferred (English-only for now) |
-| Theming | CSS vars + `.theme-dark` class | Tailwind dark mode + CSS vars |
-| Device detection | ngx-device-detector | CSS media queries + `$app/environment` |
-| Markdown | ngx-markdown + marked | mdsvex (if needed) |
-| Auth | JWT in localStorage + interceptor | JWT in httpOnly cookie, `hooks.server.ts` (no OAuth, no WebAuthn) |
-| Build | Nx + Angular CLI + esbuild | Vite (built into SvelteKit) |
+| Concern          | Angular (current)                 | SvelteKit (target)                                                           |
+| ---------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| Framework        | Angular 21                        | SvelteKit 2                                                                  |
+| Language         | TypeScript                        | TypeScript                                                                   |
+| Routing          | Angular Router + lazy loading     | SvelteKit file-based routing                                                 |
+| State            | RxJS + ObservableStore            | Svelte stores (`writable`, `derived`)                                        |
+| HTTP client      | Angular HttpClient + interceptors | Same-origin `fetch` to `/api/v1/*`; SvelteKit server forwards to gofolio-api |
+| UI components    | Angular Material                  | shadcn-svelte (Radix primitives, Tailwind)                                   |
+| Icons            | Ionicons                          | Ionicons (same icon set for visual parity)                                   |
+| Charts           | Chart.js + Angular wrappers       | Chart.js direct (or svelte-chartjs)                                          |
+| CSS              | SCSS + Bootstrap 4 + CSS vars     | Tailwind CSS + CSS vars                                                      |
+| Tables           | MatTable + MatSort + MatPaginator | TanStack Table (headless) + shadcn table                                     |
+| Dialogs          | MatDialog                         | shadcn-svelte Dialog (Radix)                                                 |
+| Forms            | Angular Reactive Forms + Material | Native forms + superforms + shadcn form                                      |
+| i18n             | Angular i18n (xlf)                | Deferred (English-only for now)                                              |
+| Theming          | CSS vars + `.theme-dark` class    | Tailwind dark mode + CSS vars                                                |
+| Device detection | ngx-device-detector               | CSS media queries + `$app/environment`                                       |
+| Markdown         | ngx-markdown + marked             | mdsvex (if needed)                                                           |
+| Auth             | JWT in localStorage + interceptor | JWT in httpOnly cookie, `hooks.server.ts` (no OAuth, no WebAuthn)            |
+| Build            | Nx + Angular CLI + esbuild        | Vite (built into SvelteKit)                                                  |
 
 ### Why shadcn-svelte
 
@@ -209,53 +209,53 @@ The complex views.
 
 ### High-priority (Phase 1-3)
 
-| Angular Component | SvelteKit Equivalent |
-|-------------------|---------------------|
-| `app.component.ts` | `+layout.svelte` (root) |
-| `header.component.ts` | `$lib/components/layout/Header.svelte` |
-| `footer.component.ts` | `$lib/components/layout/Footer.svelte` |
-| `auth/page.component.ts` | `routes/(auth)/auth/+page.svelte` |
-| `login-with-access-token-dialog` | Inline in auth page |
-| `home-overview.component.ts` | `routes/(app)/home/+page.svelte` |
-| `home-holdings.component.ts` | `$lib/components/HoldingsTable.svelte` |
-| `home-summary.component.ts` | `$lib/components/HomeSummary.svelte` |
-| `home-watchlist.component.ts` | `$lib/components/Watchlist.svelte` |
-| `account-detail-dialog` | `$lib/components/dialogs/AccountDialog.svelte` |
-| `holding-detail-dialog` | `$lib/components/dialogs/HoldingDialog.svelte` |
+| Angular Component                | SvelteKit Equivalent                           |
+| -------------------------------- | ---------------------------------------------- |
+| `app.component.ts`               | `+layout.svelte` (root)                        |
+| `header.component.ts`            | `$lib/components/layout/Header.svelte`         |
+| `footer.component.ts`            | `$lib/components/layout/Footer.svelte`         |
+| `auth/page.component.ts`         | `routes/(auth)/auth/+page.svelte`              |
+| `login-with-access-token-dialog` | Inline in auth page                            |
+| `home-overview.component.ts`     | `routes/(app)/home/+page.svelte`               |
+| `home-holdings.component.ts`     | `$lib/components/HoldingsTable.svelte`         |
+| `home-summary.component.ts`      | `$lib/components/HomeSummary.svelte`           |
+| `home-watchlist.component.ts`    | `$lib/components/Watchlist.svelte`             |
+| `account-detail-dialog`          | `$lib/components/dialogs/AccountDialog.svelte` |
+| `holding-detail-dialog`          | `$lib/components/dialogs/HoldingDialog.svelte` |
 
 ### UI library mapping
 
-| Angular Material | shadcn-svelte |
-|-----------------|---------------|
-| `MatDialog` | `Dialog` |
-| `MatTable` | `Table` (+ TanStack Table) |
-| `MatTabs` | `Tabs` |
-| `MatButton` | `Button` |
-| `MatInput` / `MatFormField` | `Input` + `Label` |
-| `MatSelect` | `Select` |
-| `MatCheckbox` | `Checkbox` |
-| `MatChip` | `Badge` |
-| `MatCard` | `Card` |
-| `MatMenu` | `DropdownMenu` |
-| `MatTooltip` | `Tooltip` |
-| `MatProgressBar` | `Progress` |
-| `MatSlideToggle` | `Switch` |
-| `MatExpansionPanel` | `Collapsible` / `Accordion` |
-| `MatPaginator` | TanStack Table pagination |
-| `MatSort` | TanStack Table sorting |
-| `MatDatepicker` | `DatePicker` (shadcn) |
+| Angular Material            | shadcn-svelte               |
+| --------------------------- | --------------------------- |
+| `MatDialog`                 | `Dialog`                    |
+| `MatTable`                  | `Table` (+ TanStack Table)  |
+| `MatTabs`                   | `Tabs`                      |
+| `MatButton`                 | `Button`                    |
+| `MatInput` / `MatFormField` | `Input` + `Label`           |
+| `MatSelect`                 | `Select`                    |
+| `MatCheckbox`               | `Checkbox`                  |
+| `MatChip`                   | `Badge`                     |
+| `MatCard`                   | `Card`                      |
+| `MatMenu`                   | `DropdownMenu`              |
+| `MatTooltip`                | `Tooltip`                   |
+| `MatProgressBar`            | `Progress`                  |
+| `MatSlideToggle`            | `Switch`                    |
+| `MatExpansionPanel`         | `Collapsible` / `Accordion` |
+| `MatPaginator`              | TanStack Table pagination   |
+| `MatSort`                   | TanStack Table sorting      |
+| `MatDatepicker`             | `DatePicker` (shadcn)       |
 
 ### Chart components
 
-| Angular Chart Component | SvelteKit Equivalent |
-|------------------------|---------------------|
+| Angular Chart Component         | SvelteKit Equivalent                            |
+| ------------------------------- | ----------------------------------------------- |
 | `investment-chart.component.ts` | `$lib/components/charts/InvestmentChart.svelte` |
-| `line-chart/` (ui lib) | `$lib/components/charts/LineChart.svelte` |
-| `portfolio-proportion-chart/` | `$lib/components/charts/ProportionChart.svelte` |
-| `treemap-chart/` | `$lib/components/charts/TreemapChart.svelte` |
-| `world-map-chart/` | `$lib/components/charts/WorldMap.svelte` |
-| `benchmark-comparator` | `$lib/components/charts/BenchmarkChart.svelte` |
-| `fear-and-greed-index` | `$lib/components/charts/FearGreedIndex.svelte` |
+| `line-chart/` (ui lib)          | `$lib/components/charts/LineChart.svelte`       |
+| `portfolio-proportion-chart/`   | `$lib/components/charts/ProportionChart.svelte` |
+| `treemap-chart/`                | `$lib/components/charts/TreemapChart.svelte`    |
+| `world-map-chart/`              | `$lib/components/charts/WorldMap.svelte`        |
+| `benchmark-comparator`          | `$lib/components/charts/BenchmarkChart.svelte`  |
+| `fear-and-greed-index`          | `$lib/components/charts/FearGreedIndex.svelte`  |
 
 ## API Client Design
 
@@ -266,15 +266,15 @@ The complex views.
 const API_BASE = '/api/v1';
 
 export async function api(path: string, options?: RequestInit) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
-  });
-  if (!res.ok) throw new ApiError(res.status, await res.text());
-  return res.json();
+	const res = await fetch(`${API_BASE}${path}`, {
+		...options,
+		headers: {
+			'Content-Type': 'application/json',
+			...options?.headers
+		}
+	});
+	if (!res.ok) throw new ApiError(res.status, await res.text());
+	return res.json();
 }
 
 // Typed wrappers
@@ -289,11 +289,11 @@ Server-side loaders call same-origin API routes; JWT cookie is forwarded server-
 ```typescript
 // routes/(app)/home/+page.server.ts
 export async function load({ fetch }) {
-  const [holdings, summary] = await Promise.all([
-    fetch('/api/v1/portfolio/holdings').then((r) => r.json()),
-    fetch('/api/v1/portfolio/performance?range=max').then((r) => r.json())
-  ]);
-  return { holdings, summary };
+	const [holdings, summary] = await Promise.all([
+		fetch('/api/v1/portfolio/holdings').then((r) => r.json()),
+		fetch('/api/v1/portfolio/performance?range=max').then((r) => r.json())
+	]);
+	return { holdings, summary };
 }
 ```
 
@@ -313,6 +313,7 @@ Browser → gofolio-web → gofolio-api → db
 ```
 
 Benefits over current approach:
+
 - JWT never exposed to client JS (httpOnly cookie)
 - No localStorage token storage
 - No CORS complexity (browser only talks to gofolio-web)
@@ -346,10 +347,10 @@ Implementation details may differ as long as visual and interaction outcomes rem
 ```css
 /* app.css — ported from Ghostfolio */
 :root {
-  --dark-background: rgb(25, 25, 25);
-  --light-background: rgb(255, 255, 255);
-  --font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', sans-serif;
-  /* ... port all 100+ palette variables from the original */
+	--dark-background: rgb(25, 25, 25);
+	--light-background: rgb(255, 255, 255);
+	--font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+	/* ... port all 100+ palette variables from the original */
 }
 ```
 

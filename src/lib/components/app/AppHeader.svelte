@@ -6,6 +6,7 @@
 	import { Sun, Moon, Menu, X, LogOut, User } from '@lucide/svelte';
 	import type { InfoResponse, UserResponse } from '$lib/types/api';
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	let { info, user }: { info: InfoResponse; user: UserResponse } = $props();
 
 	let mobileMenuOpen = $state(false);
@@ -24,7 +25,7 @@
 </script>
 
 <header
-	class="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+	class="border-border bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur"
 >
 	<div class="flex h-14 items-center px-4 md:px-6">
 		<!-- Logo -->
@@ -32,7 +33,7 @@
 
 		<!-- Desktop nav -->
 		<nav class="hidden items-center space-x-1 md:flex">
-			{#each navLinks as link}
+			{#each navLinks as link (link.href)}
 				<a
 					href={link.href}
 					class="rounded-md px-3 py-2 text-sm font-medium transition-colors {isActive(link.href)
@@ -70,7 +71,7 @@
 		<div class="hidden md:block">
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger
-					class="inline-flex size-9 shrink-0 items-center justify-center rounded-md text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50"
+					class="hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 inline-flex size-9 shrink-0 items-center justify-center rounded-md text-sm font-medium transition-all"
 				>
 					<User class="h-4 w-4" />
 				</DropdownMenu.Trigger>
@@ -80,7 +81,7 @@
 					<form method="POST" action="/auth?/signout">
 						<button
 							type="submit"
-							class="relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground"
+							class="hover:bg-accent hover:text-accent-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none"
 						>
 							<LogOut class="h-4 w-4" />
 							Sign Out
@@ -107,8 +108,8 @@
 
 	<!-- Mobile nav -->
 	{#if mobileMenuOpen}
-		<nav class="space-y-1 border-t border-border px-4 py-3 md:hidden">
-			{#each navLinks as link}
+		<nav class="border-border space-y-1 border-t px-4 py-3 md:hidden">
+			{#each navLinks as link (link.href)}
 				<a
 					href={link.href}
 					class="block rounded-md px-3 py-2 text-sm font-medium {isActive(link.href)
@@ -133,7 +134,7 @@
 			<form method="POST" action="/auth?/signout">
 				<button
 					type="submit"
-					class="flex w-full items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+					class="text-muted-foreground hover:text-foreground flex w-full items-center rounded-md px-3 py-2 text-sm font-medium"
 				>
 					<LogOut class="mr-2 h-4 w-4" />
 					Sign Out

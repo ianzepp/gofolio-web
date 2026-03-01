@@ -9,5 +9,5 @@
 	<p class="text-muted-foreground">
 		Welcome to Gofolio. Base currency: {data.info?.baseCurrency ?? 'USD'}.
 	</p>
-	<p class="text-sm text-muted-foreground">Phase 2 will implement the portfolio overview here.</p>
+	<p class="text-muted-foreground text-sm">Phase 2 will implement the portfolio overview here.</p>
 </div>

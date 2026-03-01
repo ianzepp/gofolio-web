@@ -1,0 +1,8 @@
+# Package manager
+node_modules
+pnpm-lock.yaml
+
+# Build output
+.svelte-kit
+build
+dist

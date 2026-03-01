@@ -4,9 +4,7 @@ import { browser } from '$app/environment';
 type Theme = 'light' | 'dark';
 
 function createThemeStore() {
-	const initial: Theme = browser
-		? (localStorage.getItem('theme') as Theme) ?? 'light'
-		: 'light';
+	const initial: Theme = browser ? ((localStorage.getItem('theme') as Theme) ?? 'light') : 'light';
 
 	const { subscribe, set, update } = writable<Theme>(initial);
 

@@ -9,11 +9,11 @@
 	let loading = $state(false);
 </script>
 
-<div class="flex min-h-screen items-center justify-center bg-background">
+<div class="bg-background flex min-h-screen items-center justify-center">
 	<div class="w-full max-w-sm space-y-6 p-8">
 		<div class="space-y-2 text-center">
 			<h1 class="text-2xl font-bold tracking-tight">Gofolio</h1>
-			<p class="text-sm text-muted-foreground">Enter your security token to sign in</p>
+			<p class="text-muted-foreground text-sm">Enter your security token to sign in</p>
 		</div>
 
 		<form
@@ -41,7 +41,7 @@
 			</div>
 
 			{#if form?.error}
-				<p class="text-sm text-destructive">{form.error}</p>
+				<p class="text-destructive text-sm">{form.error}</p>
 			{/if}
 
 			<Button type="submit" class="w-full" disabled={loading}>
