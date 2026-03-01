@@ -1,3 +1,5 @@
+import type { AuthResponse, InfoResponse, UserResponse } from '$lib/types/api';
+
 const API_BASE = '/api/v1';
 
 export class ApiError extends Error {
@@ -30,5 +32,11 @@ export async function api<T = unknown>(path: string, options?: RequestInit): Pro
 	return res.json();
 }
 
-export const getInfo = () => api('/info');
-export const getUser = () => api('/user');
+export const postAuth = (accessToken: string) =>
+	api<AuthResponse>('/auth/anonymous', {
+		method: 'POST',
+		body: JSON.stringify({ accessToken })
+	});
+
+export const getInfo = () => api<InfoResponse>('/info');
+export const getUser = () => api<UserResponse>('/user');
