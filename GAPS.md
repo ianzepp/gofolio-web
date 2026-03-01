@@ -104,9 +104,9 @@ This document tracks the remaining work to recreate Ghostfolio's UI/UX in `gofol
 
 ## 14. QA and Regression Coverage
 
-- Add route-by-route parity checklist with screenshots.
-- Add responsive QA matrix (mobile/tablet/desktop).
-- Add interaction checklist (dialogs, row clicks, filters, empty/error/loading states).
+- [~] Add route-by-route parity checklist with screenshots (checklist doc added at `docs/PARITY_CHECKLIST.md`; screenshot set pending).
+- [x] Add responsive QA matrix (mobile/tablet/desktop) in parity checklist.
+- [x] Add interaction checklist (dialogs, row clicks, filters, empty/error/loading states).
 - Add basic visual regression snapshots for key pages.
 
 ## Prioritized Execution Plan
