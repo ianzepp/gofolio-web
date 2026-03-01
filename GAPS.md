@@ -83,8 +83,8 @@ This document tracks the remaining work to recreate Ghostfolio's UI/UX in `gofol
 
 ## 10. User Account / Settings Coverage
 
-- Implement account settings page and subroutes (membership/access where relevant).
-- Recreate settings update flows and UI states.
+- [~] Implement account settings page and subroutes (core settings route + access subroute added; membership/billing surfaces still pending).
+- [~] Recreate settings update flows and UI states (basic settings update flow implemented via `/api/v1/user/setting`; advanced state variations still pending).
 
 ## 11. Admin Surface Coverage (If In Scope)
 

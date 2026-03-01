@@ -4,7 +4,7 @@
 	import { theme } from '$lib/stores/theme';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { Sun, Moon, Menu, X, LogOut, User, Wallet, LayoutGrid, Plus } from '@lucide/svelte';
+	import { Sun, Moon, Menu, X, LogOut, User, Wallet, LayoutGrid, Plus, Settings } from '@lucide/svelte';
 	import type { InfoResponse, UserResponse } from '$lib/types/api';
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -101,6 +101,10 @@
 					<DropdownMenu.Item onclick={() => open('/accounts')}>
 						<Wallet class="h-4 w-4" />
 						Accounts
+					</DropdownMenu.Item>
+					<DropdownMenu.Item onclick={() => open('/account')}>
+						<Settings class="h-4 w-4" />
+						Account Settings
 					</DropdownMenu.Item>
 					{#if canCreateActivity}
 						<DropdownMenu.Item onclick={() => open('/portfolio/activities?createDialog=true')}>
