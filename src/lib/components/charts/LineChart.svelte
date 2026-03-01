@@ -30,9 +30,21 @@
 		yLabel?: string;
 		color?: string;
 		fill?: boolean;
+		showXAxis?: boolean;
+		showYAxis?: boolean;
+		animated?: boolean;
 	}
 
-	let { labels, data, yLabel = '', color = '#3b82f6', fill = true }: Props = $props();
+	let {
+		labels,
+		data,
+		yLabel = '',
+		color = '#3b82f6',
+		fill = true,
+		showXAxis = true,
+		showYAxis = true,
+		animated = false
+	}: Props = $props();
 
 	let canvasEl: HTMLCanvasElement;
 	let chart: Chart | undefined;
@@ -71,15 +83,18 @@
 						type: 'time',
 						time: { unit: 'month' },
 						grid: { display: false },
+						display: showXAxis,
 						ticks: {
 							maxTicksLimit: 8
 						}
 					},
 					y: {
-						title: yLabel ? { display: true, text: yLabel } : { display: false },
+						display: showYAxis,
+						title: yLabel ? { display: showYAxis, text: yLabel } : { display: false },
 						grid: { color: 'rgba(128,128,128,0.1)' }
 					}
 				},
+				animation: animated ? {} : false,
 				interaction: {
 					mode: 'nearest',
 					axis: 'x',

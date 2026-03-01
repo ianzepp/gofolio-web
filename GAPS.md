@@ -24,10 +24,10 @@ This document tracks the remaining work to recreate Ghostfolio's UI/UX in `gofol
 
 ## 2. Home Overview Parity
 
-- Add data-provider error/status indicators and associated affordances.
-- Align loading/skeleton states to Ghostfolio behavior.
-- Match chart behavior details (animation conditions, axis visibility toggles, empty/fallback handling).
-- Complete onboarding empty-state flow logic (state-based CTA progression).
+- [x] Add data-provider error/status indicators and associated affordances.
+- [x] Align loading/skeleton and empty fallback states to Ghostfolio behavior.
+- [x] Match chart behavior details (animation condition, axis visibility toggles, empty/fallback handling).
+- [x] Complete onboarding empty-state flow logic (state-based CTA progression: setup accounts vs add activity).
 
 ## 3. Home Holdings Parity
 

@@ -21,16 +21,17 @@ export const load: PageServerLoad = async ({ locals, parent, url }) => {
 		);
 
 		if (!res.ok) {
-			return { performance: null, chart: null, range };
+			return { performance: null, chart: [], errors: [], range };
 		}
 
 		const data: PortfolioPerformanceResponse = await res.json();
 		return {
 			performance: data.performance,
 			chart: data.chart ?? [],
+			errors: data.errors ?? [],
 			range
 		};
 	} catch {
-		return { performance: null, chart: null, range };
+		return { performance: null, chart: [], errors: [], range };
 	}
 };

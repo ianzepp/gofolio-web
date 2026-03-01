@@ -26,6 +26,7 @@ export interface UserSettings {
 
 export interface UserResponse {
 	id: string;
+	activitiesCount?: number;
 	permissions: string[];
 	settings: UserSettings;
 	subscription: {

@@ -5,9 +5,10 @@
 	interface Props {
 		performance: PerfData;
 		baseCurrency: string;
+		errors?: Array<{ dataSource: string; symbol: string }>;
 	}
 
-	let { performance, baseCurrency }: Props = $props();
+	let { performance, baseCurrency, errors = [] }: Props = $props();
 </script>
 
 <div class="space-y-1 text-center">
@@ -18,4 +19,12 @@
 		<Value value={performance.netPerformanceWithCurrencyEffect} currency={baseCurrency} colorized />
 		<Value value={performance.netPerformancePercentageWithCurrencyEffect} type="percent" colorized />
 	</div>
+	{#if errors.length > 0}
+		<div class="bg-muted/40 mx-auto mt-3 max-w-xl rounded-md border px-3 py-2 text-left text-xs">
+			<p class="font-semibold">Some market data could not be refreshed:</p>
+			<p class="text-muted-foreground mt-1">
+				{errors.map((error) => `${error.dataSource}:${error.symbol}`).join(', ')}
+			</p>
+		</div>
+	{/if}
 </div>
