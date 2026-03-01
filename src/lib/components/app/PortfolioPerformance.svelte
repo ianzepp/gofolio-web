@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
 	import Value from './Value.svelte';
 	import type { PortfolioPerformance as PerfData } from '$lib/types/api';
 
@@ -11,56 +10,12 @@
 	let { performance, baseCurrency }: Props = $props();
 </script>
 
-<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-	<Card.Root>
-		<Card.Header class="pb-2">
-			<Card.Description>Current Value</Card.Description>
-		</Card.Header>
-		<Card.Content>
-			<p class="text-2xl font-bold">
-				<Value value={performance.currentValueInBaseCurrency} currency={baseCurrency} />
-			</p>
-		</Card.Content>
-	</Card.Root>
-
-	<Card.Root>
-		<Card.Header class="pb-2">
-			<Card.Description>Net Performance</Card.Description>
-		</Card.Header>
-		<Card.Content>
-			<p class="text-2xl font-bold">
-				<Value
-					value={performance.netPerformanceWithCurrencyEffect}
-					currency={baseCurrency}
-					colorized
-				/>
-			</p>
-		</Card.Content>
-	</Card.Root>
-
-	<Card.Root>
-		<Card.Header class="pb-2">
-			<Card.Description>Net Performance %</Card.Description>
-		</Card.Header>
-		<Card.Content>
-			<p class="text-2xl font-bold">
-				<Value
-					value={performance.netPerformancePercentageWithCurrencyEffect}
-					type="percent"
-					colorized
-				/>
-			</p>
-		</Card.Content>
-	</Card.Root>
-
-	<Card.Root>
-		<Card.Header class="pb-2">
-			<Card.Description>Total Investment</Card.Description>
-		</Card.Header>
-		<Card.Content>
-			<p class="text-2xl font-bold">
-				<Value value={performance.totalInvestment} currency={baseCurrency} />
-			</p>
-		</Card.Content>
-	</Card.Root>
+<div class="space-y-1 text-center">
+	<p class="text-4xl font-bold leading-tight md:text-5xl">
+		<Value value={performance.currentValueInBaseCurrency} currency={baseCurrency} />
+	</p>
+	<div class="mx-auto flex max-w-md items-center justify-center gap-5 text-sm md:text-base">
+		<Value value={performance.netPerformanceWithCurrencyEffect} currency={baseCurrency} colorized />
+		<Value value={performance.netPerformancePercentageWithCurrencyEffect} type="percent" colorized />
+	</div>
 </div>

@@ -9,4 +9,9 @@
 	let baseCurrency = $derived(parentData.info?.baseCurrency ?? 'USD');
 </script>
 
-<HoldingsTable holdings={data.holdings} {baseCurrency} />
+<div class="space-y-4">
+	<h1 class="hidden text-center text-2xl font-semibold sm:block">Holdings</h1>
+	<div class="mx-auto w-full max-w-6xl">
+		<HoldingsTable holdings={data.holdings} {baseCurrency} />
+	</div>
+</div>
